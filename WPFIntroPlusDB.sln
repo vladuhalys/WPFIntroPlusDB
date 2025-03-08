@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{6B411A2E-B1D7-4A28-A3B6-9D0F309090AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseService", "DatabaseService\DatabaseService.csproj", "{8908FB64-A512-4811-B75D-27627E4D5D93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopApp", "DesktopApp\DesktopApp.csproj", "{5BB5D8B3-216E-42B8-8164-7A31E260D392}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B411A2E-B1D7-4A28-A3B6-9D0F309090AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B411A2E-B1D7-4A28-A3B6-9D0F309090AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B411A2E-B1D7-4A28-A3B6-9D0F309090AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B411A2E-B1D7-4A28-A3B6-9D0F309090AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8908FB64-A512-4811-B75D-27627E4D5D93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8908FB64-A512-4811-B75D-27627E4D5D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8908FB64-A512-4811-B75D-27627E4D5D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8908FB64-A512-4811-B75D-27627E4D5D93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BB5D8B3-216E-42B8-8164-7A31E260D392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BB5D8B3-216E-42B8-8164-7A31E260D392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BB5D8B3-216E-42B8-8164-7A31E260D392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BB5D8B3-216E-42B8-8164-7A31E260D392}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
