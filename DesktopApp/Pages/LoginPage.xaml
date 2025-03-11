@@ -14,18 +14,57 @@
         </LinearGradientBrush>
     </UserControl.Background>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <materialDesign:Card Grid.Column="1" 
-                             Margin="0 30 30 30" 
+        
+        <materialDesign:Card  
+                             Margin="30" 
                              materialDesign:UniformCornerRadius="20"
-                             materialDesign:ElevationAssist.Elevation="Dp16">
-           
+                             materialDesign:ElevationAssist.Elevation="Dp16"
+                             MaxWidth="600" MaxHeight="300" MinHeight="200" MinWidth="400">
+            <StackPanel Orientation="Vertical" Margin="20">
+                <TextBlock Text="Вітаю вас у програмі!" FontSize="18" Padding="0 10 0 10" 
+                           FontFamily="Inter" FontWeight="SemiBold" Foreground="Azure"/>
+                <TextBlock Text="Будь ласка, увійдіть в свій обліковий запис" FontSize="14" Padding="0 0 0 10" 
+                           FontFamily="Inter" FontWeight="Regular" Foreground="Azure"/>
+                <DockPanel Margin="0 20 0 20">
+                    <materialDesign:PackIcon Kind="AccountSchool" VerticalAlignment="Center"
+                                             Height="30" Width="30" Foreground="Azure" Margin="0 0 10 0"/>
+                    <TextBox FontSize="14" Padding="0 0 0 10"
+                             materialDesign:HintAssist.Hint="Email"
+                             Foreground="Azure"
+                             />
+                </DockPanel>
+                <DockPanel Margin="0 20 0 10">
+                    <materialDesign:PackIcon Kind="Lock" VerticalAlignment="Center"
+                                             Height="30" Width="30" Foreground="Azure" Margin="0 0 10 0"/>
+                    <PasswordBox
+                        x:Name="PasswordBox"
+                        FontSize="14"
+                        HorizontalContentAlignment="Stretch"
+                        materialDesign:HintAssist.Hint="Password"
+                        Foreground="Azure"
+                        materialDesign:TextFieldAssist.HasClearButton="True"
+                    />
+                </DockPanel>
+                <Viewbox>
+                    
+                </Viewbox>
+                <WrapPanel HorizontalAlignment="Center">
+                    <Button materialDesign:ElevationAssist.Elevation="Dp7" Margin="0 20 10 0" 
+                            Content="Зареєструватись" 
+                            FontSize="14" 
+                            Height="40" Width="200"
+                            HorizontalAlignment="Right"
+                            Foreground="Azure" 
+                            Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                    <Button materialDesign:ElevationAssist.Elevation="Dp7" Margin="10 20 0 0" 
+                            Content="Увійти" 
+                            FontSize="14" 
+                            Height="40" Width="200"
+                            HorizontalAlignment="Right"
+                            Foreground="Azure" 
+                            Style="{StaticResource MaterialDesignRaisedButton}"/>
+                </WrapPanel>
+            </StackPanel>
             
         </materialDesign:Card>
     </Grid>
