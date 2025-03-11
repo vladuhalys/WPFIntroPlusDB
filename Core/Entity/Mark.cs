@@ -1,12 +1,7 @@
-﻿using Core.Abstractions;
-using DatabaseService.Abstractions;
-
+﻿
 namespace Core.Entity;
 
-public class Mark : IEntity, IModelToEntity
+public class Mark
 {
-    public IEntity ToEntity(IModel model)
-    {
-        throw new NotImplementedException();
-    }
+
 }

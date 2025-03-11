@@ -1,12 +1,8 @@
-﻿using Core.Abstractions;
-using DatabaseService.Abstractions;
+﻿
 
 namespace Core.Entity;
 
-public class Student : IEntity, IModelToEntity
+public class Student
 {
-    public IEntity ToEntity(IModel model)
-    {
-        throw new NotImplementedException();
-    }
+    
 }
