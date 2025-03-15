@@ -4,7 +4,7 @@ using DatabaseService.Models;
 
 namespace DatabaseService.Repository;
 
-public class AuthRepositoryImpl : AuthRepository
+public class AuthRepositoryImpl : AuthRepository<UserModel?>
 {
     private readonly DatabaseProvider _databaseProvider;
     
@@ -12,16 +12,17 @@ public class AuthRepositoryImpl : AuthRepository
     {
         _databaseProvider = databaseProvider;
     }
-    public override Task<bool> RegisterAsync(string email, string password)
+    [Obsolete("Obsolete")]
+    public override async Task<bool> RegisterAsync(string email, string password)
     {
-        UserModel user = new UserModel(email, password);
-        var resultResponse = _databaseProvider.CreateUserAsync(user);
-        return Task.FromResult(resultResponse.Result == 1);
+        UserModel user = new UserModel(0, email, password);
+        var resultResponse = await _databaseProvider.CreateUserAsync(user);
+        return resultResponse > 0;
     }       
     
-    public override Task<bool> LoginAsync(string email, string password)
+    [Obsolete("Obsolete")]
+    public override async Task<UserModel?> LoginAsync(string email, string password)
     {
-        var user = _databaseProvider.GetUserAsync(email);
-        return Task.FromResult(user.Result?.password == password);
+        return await _databaseProvider.GetUserAsync(email);
     }
 }
