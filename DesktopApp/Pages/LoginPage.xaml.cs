@@ -10,9 +10,11 @@ namespace DesktopApp.Pages;
 public partial class LoginPage : UserControl
 {
     private AuthRepository<UserModel?>? _authRepository;
+    private DatabaseProvider? _databaseProvider;
     public LoginPage(DatabaseProvider? databaseProvider)
     {
         InitializeComponent();
+        _databaseProvider = databaseProvider;
         if (databaseProvider != null) _authRepository = new AuthRepositoryImpl(databaseProvider);
     }
 
@@ -35,7 +37,7 @@ public partial class LoginPage : UserControl
             if(result == MessageBoxResult.OK)
             {
                 var mainWindow = (MainWindow)Application.Current.MainWindow;
-                mainWindow?.MainWindowFrame.Navigate(new HomePage(user));
+                mainWindow?.MainWindowFrame.Navigate(new HomePage(user, _databaseProvider));
             }
         }
     }

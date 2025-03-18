@@ -5,6 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:DesktopApp.Pages"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
-   <TextBlock x:Name="WelcomeText" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Azure"/>
+             d:DesignHeight="450" d:DesignWidth="800" Background="#212121" Loaded="HomePage_OnLoaded">
+   <Grid>
+       <Grid.ColumnDefinitions>
+           <ColumnDefinition Width="0.6*"/>
+           <ColumnDefinition Width="0.2*"/>
+           <ColumnDefinition Width="0.2*"/>
+       </Grid.ColumnDefinitions>
+       <Grid.RowDefinitions>
+           <RowDefinition Height="50"/>
+           <RowDefinition/>
+       </Grid.RowDefinitions>
+       <TextBox x:Name="tbSubject" Foreground="Azure" FontSize="14" Grid.Column="0" Width="Auto" VerticalAlignment="Stretch" Style="{StaticResource MaterialDesignFilledTextBox}" Margin="10 10 10 0"/>
+       <TextBox x:Name="tbMark" Foreground="Azure" FontSize="14" Grid.Column="1" Style="{StaticResource MaterialDesignFilledTextBox}" Margin="0 10 10 0"/>
+       <Button Foreground="Azure" Grid.Column="2"  Content="Додати" Margin="0 10 10 0" Click="OnAddClick"/>
+       <DataGrid x:Name="dgMarkAndSubject" Grid.ColumnSpan="3" Grid.Row = "1" Margin="10"/>
+   </Grid>
 </UserControl>

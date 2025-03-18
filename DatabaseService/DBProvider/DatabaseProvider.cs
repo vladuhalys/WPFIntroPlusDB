@@ -13,6 +13,32 @@ public class DatabaseProvider
     {
         _connectionString = connectionString;
     }
+    
+    public async Task<int> InsertMarkAndSubjectByUserLogin(string login, string subject, int mark)
+    {
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.ExecuteAsync("USE School");
+        return await connection.ExecuteAsync(DbCommands.InsertMarkAndSubjectByUserLogin(login, subject, mark));
+    }
+
+    public async Task<StudentSubjectMarks?> GetSubjectAndMarksByUserLogin(string login)
+    {
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.ExecuteAsync("USE School");
+        //!TODO Fix: Add a query to get all subjects and marks by user login
+        var result = await connection.QueryAsync(DbCommands.GetSubjectAndMarksByUserLogin(login));
+        var enumerable = result.ToList();
+        if(enumerable.ToList().Count > 0)
+        {
+            return null;
+        }
+        StudentSubjectMarks studentSubjectMarks = new StudentSubjectMarks();
+        foreach (var row in enumerable)
+        {
+            studentSubjectMarks.marks.Add(row.Subject, row.Mark);
+        }
+        return studentSubjectMarks;
+    }
         
     [Obsolete("Obsolete")]
     public async Task<int> CreateUserAsync(UserModel user)

@@ -82,4 +82,50 @@
                             {
                                 return "USE School; SELECT * FROM Users WHERE login = @login;"; 
                             }
+
+                            public static string InsertMarkAndSubjectByUserLogin(string login, string subject, int mark)
+                            {
+                                return $@"USE School; 
+                                    DECLARE @userId INT;
+                                    SELECT @userId = Id FROM Users WHERE Login = {login};
+                                    DECLARE @studentId INT;
+                                    SELECT @studentId = Id FROM Students WHERE UserId = @userId;
+                                    DECLARE @markId INT;
+                                    SELECT @markId = Id FROM Marks WHERE StudentId = @studentId;
+                                    DECLARE @subjectId INT;
+                                    SELECT @subjectId = Id FROM Subjects WHERE Name = {subject};
+                                    INSERT INTO MarksDetail (MarkId, Mark) VALUES (@markId, {mark});
+                                    INSERT INTO StudentSubjects (StudentId, SubjectId) VALUES (@studentId, @subjectId);";
+                            }
+                            
+                            public static string GetSubjectAndMarksByUserLogin(string login)
+                            {
+                                return $@"
+        USE School;
+        DECLARE @userId INT;
+        SELECT @userId = Id FROM Users WHERE Login = '{login}';
+        DECLARE @studentId INT;
+        SELECT @studentId = Id FROM Students WHERE UserId = @userId;
+        WITH SubjectMarks AS (
+            SELECT 
+                s.Id AS SubjectId, 
+                s.Name AS SubjectName, 
+                md.Mark
+            FROM 
+                Subjects s
+            INNER JOIN 
+                StudentSubjects ss ON s.Id = ss.SubjectId
+            INNER JOIN 
+                MarksDetail md ON md.MarkId = ss.SubjectId
+            WHERE 
+                ss.StudentId = @studentId
+        )
+        SELECT 
+            SubjectId, 
+            SubjectName, 
+            Mark
+        FROM 
+            SubjectMarks;";
+                            }
+                            
                         }
