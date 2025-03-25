@@ -4,7 +4,7 @@ using DatabaseService.Models;
 
 namespace DatabaseService.Repository;
 
-public class SubjectAndMarksRepositoryImpl : SubjectAndMarksRepository<StudentSubjectMarks?>
+public class SubjectAndMarksRepositoryImpl : SubjectAndMarksRepository<IEnumerable<dynamic>?>
 {
     private readonly DatabaseProvider _databaseProvider;
     public SubjectAndMarksRepositoryImpl(DatabaseProvider databaseProvider)
@@ -12,7 +12,7 @@ public class SubjectAndMarksRepositoryImpl : SubjectAndMarksRepository<StudentSu
         _databaseProvider = databaseProvider;
     }
     
-    public override async Task<StudentSubjectMarks?> GetSubjectAndMarksByUserLogin(string login)
+    public override async Task<IEnumerable<dynamic>?> GetSubjectAndMarksByUserLogin(string login)
     {
         var result = await _databaseProvider.GetSubjectAndMarksByUserLogin(login);
         return result;

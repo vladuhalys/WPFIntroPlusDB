@@ -18,26 +18,23 @@ public class DatabaseProvider
     {
         await using var connection = new SqlConnection(_connectionString);
         await connection.ExecuteAsync("USE School");
-        return await connection.ExecuteAsync(DbCommands.InsertMarkAndSubjectByUserLogin(login, subject, mark));
+        int result = await connection.ExecuteAsync(DbCommands.InsertMarkAndSubjectByUserLogin(login, subject, mark));
+        return result;
     }
 
-    public async Task<StudentSubjectMarks?> GetSubjectAndMarksByUserLogin(string login)
+    public async Task<IEnumerable<dynamic>> GetSubjectAndMarksByUserLogin(string login)
     {
         await using var connection = new SqlConnection(_connectionString);
         await connection.ExecuteAsync("USE School");
-        //!TODO Fix: Add a query to get all subjects and marks by user login
+        // !TODO: Refactor this (if no DB - has error)
         var result = await connection.QueryAsync(DbCommands.GetSubjectAndMarksByUserLogin(login));
         var enumerable = result.ToList();
-        if(enumerable.ToList().Count > 0)
+        if(enumerable.ToList().Count == 0)
         {
             return null;
         }
-        StudentSubjectMarks studentSubjectMarks = new StudentSubjectMarks();
-        foreach (var row in enumerable)
-        {
-            studentSubjectMarks.marks.Add(row.Subject, row.Mark);
-        }
-        return studentSubjectMarks;
+
+        return enumerable;
     }
         
     [Obsolete("Obsolete")]

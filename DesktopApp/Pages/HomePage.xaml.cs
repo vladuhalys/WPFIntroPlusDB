@@ -12,7 +12,7 @@ public partial class HomePage : UserControl
     UserModel _user;
     private DatabaseProvider? _databaseProvider;
     private StudentSubjectMarks? _studentSubjectMarks;
-    private SubjectAndMarksRepository<StudentSubjectMarks?>? _subjectAndMarksRepository;
+    private SubjectAndMarksRepository<IEnumerable<dynamic>>? _subjectAndMarksRepository;
 
     public HomePage(UserModel user, DatabaseProvider? databaseProvider)
     {
@@ -23,34 +23,36 @@ public partial class HomePage : UserControl
        
     }
 
-    private void OnAddClick(object sender, RoutedEventArgs e)
+    private async void OnAddClick(object sender, RoutedEventArgs e)
     {
-        
+        try
+        {
+            await _subjectAndMarksRepository?.AddSubjectAndMarksByUserLogin(_user.login, tbSubject.Text, int.Parse(tbMark.Text));
+            await RefreshDataGrid();
+        }
+        catch (Exception exception)
+        {
+            MessageBox.Show(exception.Message, "System Exeption", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
     
-    void FillDataGrid(StudentSubjectMarks studentSubjectMarks)
+    async Task RefreshDataGrid()
     {
-        foreach (var subject in studentSubjectMarks.marks)
-        {
-            var dataGridCells = new List<DataGridCell>();
-            var dataGridCell = new DataGridCell();
-            dataGridCell.Content = subject.Key;
-            dataGridCells.Add(dataGridCell);
-            dataGridCell = new DataGridCell();
-            dataGridCell.Content = subject.Value;
-            dataGridCells.Add(dataGridCell);
-            dgMarkAndSubject.Items.Add(dataGridCells);
-        }
-        dgMarkAndSubject.Items.Refresh();
+        var items =  await _subjectAndMarksRepository?.GetSubjectAndMarksByUserLogin(_user.login);
+        dgMarkAndSubject.ItemsSource = items;
+        dgMarkAndSubject.UpdateLayout();
+        
     }
 
     private async void HomePage_OnLoaded(object sender, RoutedEventArgs e)
     {
-        _studentSubjectMarks = await _subjectAndMarksRepository?.GetSubjectAndMarksByUserLogin(_user.login);
-        if (_studentSubjectMarks != null)
+        try
         {
-            FillDataGrid(_studentSubjectMarks);
+            await RefreshDataGrid();
         }
-        
+        catch (Exception exception)
+        {
+            MessageBox.Show(exception.Message, "System Exeption", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }

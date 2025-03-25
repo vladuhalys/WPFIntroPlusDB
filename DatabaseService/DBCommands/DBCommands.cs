@@ -84,19 +84,34 @@
                             }
 
                             public static string InsertMarkAndSubjectByUserLogin(string login, string subject, int mark)
-                            {
-                                return $@"USE School; 
-                                    DECLARE @userId INT;
-                                    SELECT @userId = Id FROM Users WHERE Login = {login};
-                                    DECLARE @studentId INT;
-                                    SELECT @studentId = Id FROM Students WHERE UserId = @userId;
-                                    DECLARE @markId INT;
-                                    SELECT @markId = Id FROM Marks WHERE StudentId = @studentId;
-                                    DECLARE @subjectId INT;
-                                    SELECT @subjectId = Id FROM Subjects WHERE Name = {subject};
-                                    INSERT INTO MarksDetail (MarkId, Mark) VALUES (@markId, {mark});
-                                    INSERT INTO StudentSubjects (StudentId, SubjectId) VALUES (@studentId, @subjectId);";
-                            }
+                                {
+                                    return $@"USE School; 
+                                        DECLARE @userId INT;
+                                        SELECT @userId = Id FROM Users WHERE Login = '{login}';
+                                        DECLARE @studentId INT;
+                                        SELECT @studentId = Id FROM Students WHERE UserId = @userId;
+                                        IF @studentId IS NULL
+                                        BEGIN
+                                            INSERT INTO Students (UserId, Name, Surname, Course) VALUES (@userId, 'DefaultName', 'DefaultSurname', 'DefaultCourse');
+                                            SELECT @studentId = SCOPE_IDENTITY();
+                                        END
+                                        DECLARE @markId INT;
+                                        SELECT @markId = Id FROM Marks WHERE StudentId = @studentId;
+                                        IF @markId IS NULL
+                                        BEGIN
+                                            INSERT INTO Marks (StudentId, Average) VALUES (@studentId, NULL);
+                                            SELECT @markId = SCOPE_IDENTITY();
+                                        END
+                                        DECLARE @subjectId INT;
+                                        SELECT @subjectId = Id FROM Subjects WHERE Name = '{subject}';
+                                        IF @subjectId IS NULL
+                                        BEGIN
+                                            INSERT INTO Subjects (Name, MarkId) VALUES ('{subject}', @markId);
+                                            SELECT @subjectId = SCOPE_IDENTITY();
+                                        END
+                                        INSERT INTO MarksDetail (MarkId, Mark) VALUES (@markId, {mark});
+                                        INSERT INTO StudentSubjects (StudentId, SubjectId) VALUES (@studentId, @subjectId);";
+                                }
                             
                             public static string GetSubjectAndMarksByUserLogin(string login)
                             {

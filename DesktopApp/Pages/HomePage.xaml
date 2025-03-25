@@ -19,6 +19,12 @@
        <TextBox x:Name="tbSubject" Foreground="Azure" FontSize="14" Grid.Column="0" Width="Auto" VerticalAlignment="Stretch" Style="{StaticResource MaterialDesignFilledTextBox}" Margin="10 10 10 0"/>
        <TextBox x:Name="tbMark" Foreground="Azure" FontSize="14" Grid.Column="1" Style="{StaticResource MaterialDesignFilledTextBox}" Margin="0 10 10 0"/>
        <Button Foreground="Azure" Grid.Column="2"  Content="Додати" Margin="0 10 10 0" Click="OnAddClick"/>
-       <DataGrid x:Name="dgMarkAndSubject" Grid.ColumnSpan="3" Grid.Row = "1" Margin="10"/>
+       <DataGrid x:Name="dgMarkAndSubject" Grid.ColumnSpan="3" Grid.Row = "1" Margin="10" AutoGenerateColumns="False">
+           <DataGrid.Columns>                
+               <DataGridTextColumn Header="Id" Binding="{Binding SubjectId}"/>
+               <DataGridTextColumn Header="Subject" Binding="{Binding SubjectName}"/>
+               <DataGridTextColumn Header="Mark" Binding="{Binding Mark}"/>
+           </DataGrid.Columns>
+       </DataGrid>
    </Grid>
 </UserControl>
